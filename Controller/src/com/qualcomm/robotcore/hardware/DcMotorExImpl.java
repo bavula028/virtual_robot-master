@@ -39,8 +39,8 @@ public class DcMotorExImpl extends DcMotorImpl implements DcMotorEx{
      * Set desired velocity (in ticks per second)
      * @param angularRate  the desired ticks per second
      */
-    @Override
-    public synchronized void setVelocity(double angularRate) {
+
+    public void setVelocity(double angularRate) {
         setPower(angularRate/MOTOR_TYPE.MAX_TICKS_PER_SECOND);
     }
 
@@ -50,8 +50,8 @@ public class DcMotorExImpl extends DcMotorImpl implements DcMotorEx{
      * @param unit          the units in which angularRate is expressed
      *
      */
-    @Override
-    public synchronized void setVelocity(double angularRate, AngleUnit unit) {
+
+    public void setVelocity(double angularRate, AngleUnit unit) {
         double unitsPerRotation = unit == AngleUnit.DEGREES? 360.0 : 2.0 * Math.PI;
         double ticksPerSecond = angularRate * MOTOR_TYPE.TICKS_PER_ROTATION / unitsPerRotation;
         setVelocity(ticksPerSecond);

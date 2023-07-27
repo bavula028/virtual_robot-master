@@ -93,6 +93,11 @@ public class DcMotorImpl implements DcMotor {
             if (!targetPositionIsSet) {
                 throw new ActionNotSupportedException("Target position must be set before entering RUN_TO_POSITION mode.");
             }
+            else if (targetPositionIsSet){
+                encoderBasePosition = targetPosition;
+
+            }
+
         }
     }
 

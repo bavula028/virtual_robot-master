@@ -88,6 +88,7 @@ public abstract class LinearOpMode extends OpMode {
      * @return whether this opMode has been started or not
      */
     public final boolean isStarted() {
+
         return this.isStarted || Thread.currentThread().isInterrupted();
     }
 
@@ -97,6 +98,7 @@ public abstract class LinearOpMode extends OpMode {
      * @return whether stopping opMode has been requested or not
      */
     public final boolean isStopRequested() {
+
         return this.stopRequested || Thread.currentThread().isInterrupted();
     }
 
