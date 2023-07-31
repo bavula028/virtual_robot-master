@@ -28,7 +28,7 @@ public class BasicTeleOp extends LinearOpMode {
             float wheelPower2 = gamepad1.right_stick_y;
 
             br.setPower(wheelPower2);
-            bl.setPower(wheelPower); //left joystick controls all wheels
+            bl.setPower(wheelPower);
             fr.setPower(wheelPower2);
             fl.setPower(wheelPower);
 

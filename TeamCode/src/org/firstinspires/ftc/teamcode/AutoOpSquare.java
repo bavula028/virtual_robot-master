@@ -1,17 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotorImpl;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-//import virtual_robot.controller.AutonomousExampleMethods;
-import com.qualcomm.robotcore.hardware.DcMotorImpl;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.simple_rr_example.MecBot;
 
-import java.lang.annotation.Annotation;
-
-import static com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE;
 
 @Autonomous(name = "AutonomousSquare")
 public class AutoOpSquare extends LinearOpMode {
@@ -19,179 +23,208 @@ public class AutoOpSquare extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //DcMotorImpl frontLeft = new DcMotorImpl(hardwareMap.dcMotor.get("front_left_motor"));
-        //DcMotorImpl backLeft = hardwareMap.dcMotor.get("back_left_motor");
-        //DcMotorImpl frontRight = hardwareMap.dcMotor.get("front_right_motor");
-        //DcMotorImpl backRight = hardwareMap.dcMotor.get("back_right_motor");
+        //Call Motors
+        DcMotor backLeft = hardwareMap.dcMotor.get("back_left_motor");
+        DcMotor backRight = hardwareMap.dcMotor.get("back_right_motor");
+        DcMotor frontLeft = hardwareMap.dcMotor.get("front_left_motor");
+        DcMotor frontRight = hardwareMap.dcMotor.get("front_right_motor");
 
-        //Use DcMotorImpl's for the wheels. Use GoBuilda 194's. Found in the enum called MotorType.
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        //frontRight.setDirection(DcMotor.Direction.FORWARD);
-        //backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        //frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        //backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //WHY ARE THESE MOTORS REVERSED???
+
+        BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu"); //New IMU
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters(); //New Parameters
+        parameters.accelerationIntegrationAlgorithm = null;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.calibrationData = null;
+        parameters.calibrationDataFile = "";
+        parameters.loggingEnabled = false;
+        parameters.loggingTag = "hello";
+        imu.initialize(parameters);
+        DistanceSensor back_distance = hardwareMap.get(DistanceSensor.class, "back_distance");
+
 
         waitForStart();
 
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
+            while (back_distance.getDistance(DistanceUnit.CM) >= 65) {
+                backLeft.setPower(-1);
+                backRight.setPower(-1);
+                frontLeft.setPower(-1);
+                frontRight.setPower(-1);
+            }
 
-            //THIS IS ONLY A ROUGH DRAFT
-            //TRYING TO MAKE THE ROBOT MOVE
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            double length = backLeft.getCurrentPosition();
 
+            while (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180.0 / Math.PI <= 90) {
+                backLeft.setPower(-1);
+                frontLeft.setPower(-1);
+                backRight.setPower(1);
+                frontRight.setPower(1);
 
-            //frontLeft.getCurrentPosition();
+                telemetry.addData("imu value: ", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZXY, AngleUnit.RADIANS).firstAngle * 180 / Math.PI);
+                telemetry.addData(" ", length);
+                telemetry.update();
 
-            //SET TO MOVE FORWARD
-            //frontLeft.setTargetPosition(210000);
-            //backLeft.setTargetPosition(210000);
-            //frontRight.setTargetPosition(210000);
-            //backRight.setTargetPosition(210000);
+            }
 
-            //frontLeft.setPower(13);
-            //backLeft.setPower(13);       //POWER MUST BE BETWEEN -1 AND 1
-            //frontRight.setPower(13);
-            //backRight.setPower(13);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
 
-            //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            //frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            //TURN RIGHT
-            //frontLeft.setTargetPosition(1200);
-            //backLeft.setTargetPosition(1200);
-            //frontRight.setTargetPosition(0);
-            //backRight.setTargetPosition(0);
+            //THIS WAS ALL WRITTEN FROM ORIGINAL CODE
 
-            //frontLeft.setPower(1.5);
-            //backLeft.setPower(1.5);
-            //frontRight.setPower(0.0);
-            //backRight.setPower(0.0);
+            while (backLeft.getCurrentPosition() >= length) {
+                backLeft.setPower(-1);
+                backRight.setPower(-1);
+                frontLeft.setPower(-1);
+                frontRight.setPower(-1);
+            }
 
-            //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
 
-            //MOVE FORWARD
-            //frontLeft.setTargetPosition(5000);
-            //backLeft.setTargetPosition(5000);
-            //frontRight.setTargetPosition(5000);
-            //backRight.setTargetPosition(5000);
+            while (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI <= 175) {
+                //Compares the current angle of the robot to the initial angle from which it started
 
-            //frontLeft.setPower(1.5);
-            //backLeft.setPower(1.5);
-            //frontRight.setPower(1.5);
-            //backRight.setPower(1.5);
+                backLeft.setPower(-1);
+                frontLeft.setPower(-1);
+                backRight.setPower(1);
+                frontRight.setPower(1);
+                //TURNS RIGHT
 
-            //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                telemetry.addData("imu value:", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI);
+                telemetry.addData("", length);
+                telemetry.update();
+            }
 
-            //frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
 
-            //TURN RIGHT
-            //frontLeft.setTargetPosition(1200);
-            //backLeft.setTargetPosition(1200);
-            //frontRight.setTargetPosition(0);
-            //backRight.setTargetPosition(0);
+            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            //frontLeft.setPower(1.5);
-            //backLeft.setPower(1.5);
-            //frontRight.setPower(0.0);
-            //backRight.setPower(0.0);
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (backLeft.getCurrentPosition() >= length * 2) {
+                backLeft.setPower(-1);
+                backRight.setPower(-1);
+                frontLeft.setPower(-1);
+                frontRight.setPower(-1);
+            } //Makes it stop, I guess.
 
-            //MOVE FORWARD
-            //frontLeft.setTargetPosition(5000);
-            //backLeft.setTargetPosition(5000);
-            //frontRight.setTargetPosition(5000);
-            //backRight.setTargetPosition(5000);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
 
-            //frontLeft.setPower(1.5);
-            //backLeft.setPower(1.5);
-            //frontRight.setPower(1.5);
-            //backRight.setPower(1.5);
+            while (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI <= -85 ||
+                    imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI >= -90) {
+                backLeft.setPower(-1);
+                frontLeft.setPower(-1);
+                backRight.setPower(1);
+                frontRight.setPower(1);
 
-            //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                telemetry.addData("imu value:", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI);
+                telemetry.addData(" ", length);
+                telemetry.update();
 
-            //frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
 
-            //TURN RIGHT
-            //frontLeft.setTargetPosition(1200);
-            //backLeft.setTargetPosition(1200);
-            //frontRight.setTargetPosition(0);
-            //backRight.setTargetPosition(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
 
-            //frontLeft.setPower(1.5);
-            //backLeft.setPower(1.5);
-            //frontRight.setPower(0.0);
-            //backRight.setPower(0.0);
+            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            //MOVE FORWARD
-            //frontLeft.setTargetPosition(5000);
-            //backLeft.setTargetPosition(5000);
-            //frontRight.setTargetPosition(5000);
-            //backRight.setTargetPosition(5000);
+            while (backLeft.getCurrentPosition() <= 2 * length) {
+                backLeft.setPower(-1);
+                backRight.setPower(-1);
+                frontLeft.setPower(-1);
+                frontRight.setPower(-1);
+            }
 
-            //frontLeft.setPower(1.5);
-            //backLeft.setPower(1.5);
-            //frontRight.setPower(1.5);
-            //backRight.setPower(1.5);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
 
-            //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI >= -180 ||
+                    imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI <= -170){
+                backLeft.setPower(-1);
+                frontLeft.setPower(-1);
+                backRight.setPower(1);
+                frontRight.setPower(1);
 
-            //frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            //backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                telemetry.addData("imu value:", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI);
+                telemetry.addData(" ", length);
+                telemetry.update();
 
-            //TURN RIGHT
-            //frontLeft.setTargetPosition(1200);
-            //backLeft.setTargetPosition(1200);
-            //frontRight.setTargetPosition(0);
-            //backRight.setTargetPosition(0);
+            }
 
-            //frontLeft.setPower(1.5);
-            //backLeft.setPower(1.5);
-            //frontRight.setPower(0.0);
-            //backRight.setPower(0.0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
 
-            //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         }
 
     }
+
 }
