@@ -79,7 +79,7 @@ public class AutoOpSquare extends LinearOpMode {
                 backRight.setPower(1);
                 frontRight.setPower(1);
 
-                telemetry.addData("imu value: ", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZXY, AngleUnit.RADIANS).firstAngle * 180 / Math.PI);
+                telemetry.addData("imu value: ", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI);
                 telemetry.addData(" ", length);
                 telemetry.update();
 
@@ -99,8 +99,6 @@ public class AutoOpSquare extends LinearOpMode {
             backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            //THIS WAS ALL WRITTEN FROM ORIGINAL CODE
 
             while (backLeft.getCurrentPosition() >= length) {
                 backLeft.setPower(-1);
@@ -155,8 +153,8 @@ public class AutoOpSquare extends LinearOpMode {
             frontLeft.setPower(0);
             frontRight.setPower(0);
 
-            while (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI <= -85 ||
-                    imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI >= -90) {
+            while (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI <= -90 ||
+                    imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI >= -85) {
                 backLeft.setPower(-1);
                 frontLeft.setPower(-1);
                 backRight.setPower(1);
@@ -183,7 +181,7 @@ public class AutoOpSquare extends LinearOpMode {
             frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            while (backLeft.getCurrentPosition() <= 2 * length) {
+            while (backLeft.getCurrentPosition() >= length * 2) {
                 backLeft.setPower(-1);
                 backRight.setPower(-1);
                 frontLeft.setPower(-1);
@@ -195,8 +193,8 @@ public class AutoOpSquare extends LinearOpMode {
             frontLeft.setPower(0);
             frontRight.setPower(0);
 
-            while (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI >= -180 ||
-                    imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI <= -170){
+            while (imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI <= -5 ||
+                    imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI >= 0 ){
                 backLeft.setPower(-1);
                 frontLeft.setPower(-1);
                 backRight.setPower(1);
@@ -207,6 +205,7 @@ public class AutoOpSquare extends LinearOpMode {
                 telemetry.update();
 
             }
+
 
             backLeft.setPower(0);
             backRight.setPower(0);
@@ -223,6 +222,14 @@ public class AutoOpSquare extends LinearOpMode {
             frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+            while (backLeft.getCurrentPosition() >= length * 2) {
+                backLeft.setPower(-1);
+                backRight.setPower(-1);
+                frontLeft.setPower(-1);
+                frontRight.setPower(-1);
+            }
+
+            requestOpModeStop();
         }
 
     }
