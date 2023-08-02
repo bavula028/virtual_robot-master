@@ -11,8 +11,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @TeleOp(name = "Field Centric")
 public class FieldCentric extends LinearOpMode{
 
-
-
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -86,6 +84,19 @@ public class FieldCentric extends LinearOpMode{
             //STEP SIX: Adding Rotation
             double rotation = gamepad1.right_stick_x;
 
+            if (rotation == 1.0){
+                bl.setPower(1);
+                fl.setPower(1);
+                br.setPower(-1);
+                fr.setPower(-1);
+            }
+            else if (rotation == -1.0){
+                bl.setPower(-1);
+                fl.setPower(-1);
+                br.setPower(1);
+                fr.setPower(1);
+            }
+
             bl.setPower(Math.sin(travelAngleVariable) - rotation);
             fr.setPower(Math.sin(travelAngleVariable) - rotation);
             br.setPower(Math.cos(travelAngleVariable) + rotation);
@@ -97,17 +108,11 @@ public class FieldCentric extends LinearOpMode{
             telemetry.addData("robot heading:", robotHeading);
             telemetry.addData("lateral travel angle:", lateralTravelAngle);
             telemetry.addData("travel angle:", travelAngleVariable);
+            telemetry.addData("rotation:", rotation);
             telemetry.update();
 
-            if (gamepad1.a)
-            {
-                requestOpModeStop();
-            }
         }
 
     }
-
-
-
 
 }
