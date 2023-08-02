@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import static com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE;
 
 @TeleOp(name = "BasicOpMode")
 public class BasicTeleOp extends LinearOpMode {
