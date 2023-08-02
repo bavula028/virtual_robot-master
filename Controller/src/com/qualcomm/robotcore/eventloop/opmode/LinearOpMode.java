@@ -16,6 +16,8 @@ public abstract class LinearOpMode extends OpMode {
 
     /**
      * OpModes must override the abstract runOpMode() method.
+     *
+     * @return
      */
     abstract public void runOpMode() throws InterruptedException;
 

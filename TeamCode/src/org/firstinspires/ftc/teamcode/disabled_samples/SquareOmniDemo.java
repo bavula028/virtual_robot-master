@@ -60,6 +60,7 @@ public class SquareOmniDemo extends LinearOpMode {
                     ypr.getPitch(AngleUnit.DEGREES), ypr.getRoll(AngleUnit.DEGREES));
             telemetry.update();
         }
+
     }
 
 }
