@@ -84,19 +84,6 @@ public class FieldCentric extends LinearOpMode{
             //STEP SIX: Adding Rotation
             double rotation = gamepad1.right_stick_x;
 
-            if (rotation == 1.0){
-                bl.setPower(1);
-                fl.setPower(1);
-                br.setPower(-1);
-                fr.setPower(-1);
-            }
-            else if (rotation == -1.0){
-                bl.setPower(-1);
-                fl.setPower(-1);
-                br.setPower(1);
-                fr.setPower(1);
-            }
-
             bl.setPower(Math.sin(travelAngleVariable) - rotation);
             fl.setPower(Math.cos(travelAngleVariable) - rotation);
             br.setPower(Math.cos(travelAngleVariable) + rotation);
