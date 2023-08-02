@@ -98,9 +98,9 @@ public class FieldCentric extends LinearOpMode{
             }
 
             bl.setPower(Math.sin(travelAngleVariable) - rotation);
-            fr.setPower(Math.sin(travelAngleVariable) - rotation);
+            fl.setPower(Math.cos(travelAngleVariable) - rotation);
             br.setPower(Math.cos(travelAngleVariable) + rotation);
-            fl.setPower(Math.cos(travelAngleVariable) + rotation);
+            fr.setPower(Math.sin(travelAngleVariable) + rotation);
 
             //STEP SEVEN: Adding Data to the Telemetry
             telemetry.addData("joystick angle:", joystickAngle);
