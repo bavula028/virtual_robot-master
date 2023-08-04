@@ -190,7 +190,7 @@ public class AutoOpSquare extends LinearOpMode {
             frontRight.setPower(0);
 
             while (imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI <= -5 ||
-                    imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI >= 0 ){
+                    imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI >= 0){
                 backLeft.setPower(-1);
                 frontLeft.setPower(-1);
                 backRight.setPower(1);
