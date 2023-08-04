@@ -32,6 +32,9 @@ public class PracticeAutonomousArmBot extends LinearOpMode{
         DcMotor fl = hardwareMap.dcMotor.get("front_left_motor");
         DcMotor fr = hardwareMap.dcMotor.get("front_right_motor");
 
+        bl.setDirection(DcMotor.Direction.REVERSE);
+        fl.setDirection(DcMotor.Direction.REVERSE);
+
         BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -51,9 +54,43 @@ public class PracticeAutonomousArmBot extends LinearOpMode{
         //Do I want to code hand servos?
         ServoImpl hand_servo = hardwareMap.get(ServoImpl.class, "hand_servo");
 
+        bl.setPower(0);
+        br.setPower(0);
+        fl.setPower(0);
+        fr.setPower(0);
+
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
         while (opModeIsActive()){
+
+            //Robot starts sideways.
+            //Strafes right.
+            //Hopefully.
+
+            while(left_distance.getDistance(DistanceUnit.CM) < 66){
+                bl.setPower(-1);
+                br.setPower(1);
+                fl.setPower(1);
+                fr.setPower(-1);
+
+                telemetry.addData("length from left wall:", left_distance.getDistance(DistanceUnit.CM));
+                telemetry.update();
+
+            }
+
+            bl.setPower(0);
+            br.setPower(0);
+            fl.setPower(0);
+            fr.setPower(0);
 
 
 
