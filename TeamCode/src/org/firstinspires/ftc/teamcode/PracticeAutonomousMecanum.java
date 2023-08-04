@@ -43,6 +43,7 @@ public class PracticeAutonomousMecanum extends LinearOpMode{
 
         imu.initialize(parameters);
         DistanceSensor front_distance = hardwareMap.get(DistanceSensor.class, "front_distance");
+        DistanceSensor back_distance = hardwareMap.get(DistanceSensor.class, "back_distance");
 
         bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -153,7 +154,8 @@ public class PracticeAutonomousMecanum extends LinearOpMode{
             fl.setPower(0);
             fr.setPower(0);
 
-            while(imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI <= -90){
+            while(imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI < -90 ||
+            imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI > -85){
                 bl.setPower(-1);
                 br.setPower(1);
                 fl.setPower(-1);
@@ -164,9 +166,33 @@ public class PracticeAutonomousMecanum extends LinearOpMode{
                 telemetry.update();
             }
 
-            //requestOpModeStop();
+            bl.setPower(0);
+            br.setPower(0);
+            fl.setPower(0);
+            fr.setPower(0);
+
+            bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            while (back_distance.getDistance(DistanceUnit.CM) >= 2){
+                bl.setPower(-1);
+                br.setPower(-1);
+                fl.setPower(-1);
+                fr.setPower(-1);
+            }
+
+            requestOpModeStop();
 
         }
+
+
 
     }
 }
