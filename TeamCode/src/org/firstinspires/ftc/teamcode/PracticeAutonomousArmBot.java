@@ -76,7 +76,8 @@ public class PracticeAutonomousArmBot extends LinearOpMode{
             //Strafes right.
             //Hopefully.
 
-            while(left_distance.getDistance(DistanceUnit.CM) < 66){
+
+            while(left_distance.getDistance(DistanceUnit.CM) <= 140){
                 bl.setPower(-1);
                 br.setPower(1);
                 fl.setPower(1);
@@ -85,6 +86,22 @@ public class PracticeAutonomousArmBot extends LinearOpMode{
                 telemetry.addData("length from left wall:", left_distance.getDistance(DistanceUnit.CM));
                 telemetry.update();
 
+            }  //Keeps returning 820.0. Why?
+
+            bl.setPower(0);
+            br.setPower(0);
+            fl.setPower(0);
+            fr.setPower(0);
+
+            while (front_distance.getDistance(DistanceUnit.CM) > 10){
+                bl.setPower(1);
+                br.setPower(1);
+                fl.setPower(1);
+                fr.setPower(1);
+
+                telemetry.addData("length from left wall:", left_distance.getDistance(DistanceUnit.CM));
+                telemetry.addData("front distance:", front_distance.getDistance(DistanceUnit.CM));
+                telemetry.update();
             }
 
             bl.setPower(0);
@@ -92,9 +109,28 @@ public class PracticeAutonomousArmBot extends LinearOpMode{
             fl.setPower(0);
             fr.setPower(0);
 
+            //HOW DO I CODE THE SERVOS?
+
+            hand_servo.setPosition(1); // means open
+
+            while (front_distance.getDistance(DistanceUnit.CM) < 65){
+                bl.setPower(-1);
+                br.setPower(-1);
+                fl.setPower(-1);
+                fr.setPower(-1);
+            }
+            bl.setPower(0);
+            br.setPower(0);
+            fl.setPower(0);
+            fr.setPower(0);
+
+
+
+
 
 
         }
 
     }
 }
+
