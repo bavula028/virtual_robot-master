@@ -31,6 +31,7 @@ public class PracticeAutonomousArmBot extends LinearOpMode{
         DcMotor br = hardwareMap.dcMotor.get("back_right_motor");
         DcMotor fl = hardwareMap.dcMotor.get("front_left_motor");
         DcMotor fr = hardwareMap.dcMotor.get("front_right_motor");
+        DcMotor am = hardwareMap.dcMotor.get("arm_motor");
 
         bl.setDirection(DcMotor.Direction.REVERSE);
         fl.setDirection(DcMotor.Direction.REVERSE);
@@ -123,6 +124,11 @@ public class PracticeAutonomousArmBot extends LinearOpMode{
             br.setPower(0);
             fl.setPower(0);
             fr.setPower(0);
+
+
+
+
+            requestOpModeStop();
 
 
 
