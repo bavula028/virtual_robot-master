@@ -2,21 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-
-import com.qualcomm.hardware.bosch.BNO055IMU;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.ServoImpl;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-
 @Autonomous(name = "Arm Bot Autonomous Multi-Thread")
-public class MutlithreadingPractice extends LinearOpMode implements Runnable {
+public class MultithreadAutonomous extends LinearOpMode implements Runnable {
     @Override
     public void runOpMode() throws InterruptedException {
 
