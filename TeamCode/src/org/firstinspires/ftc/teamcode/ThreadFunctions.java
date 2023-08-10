@@ -50,6 +50,11 @@ public class ThreadFunctions extends LinearOpMode implements Runnable {
         front = this.front;
         back = this.back;
 
+        left = hardwareMap.get(DistanceSensor.class, "left_distance_sensor");
+        right = hardwareMap.get(DistanceSensor.class, "right_distance_sensor");
+        front = hardwareMap.get(DistanceSensor.class, "front_distance_sensor");
+        back = hardwareMap.get(DistanceSensor.class, "back_distance_sensor");
+
         hand_servo = this.hand_servo;
 
         imu = this.imu;
@@ -79,7 +84,7 @@ public class ThreadFunctions extends LinearOpMode implements Runnable {
     }
 
     public void forwardLeftDiagonal(){
-        while (front.getDistance(DistanceUnit.CM) >= 20){
+        while (front.getDistance(DistanceUnit.CM) >= 20){  //Unknown Error on this line
             bl.setPower(1);
             br.setPower(0);
             fl.setPower(0);
@@ -98,16 +103,10 @@ public class ThreadFunctions extends LinearOpMode implements Runnable {
 
     public void runOpMode() throws InterruptedException{
 
-        runOpModeThread(bl, br, fl, fr, arm, hand_servo, back, front, left, right, imu, parameters);
-
         waitForStart();
 
-        forwardLeftDiagonal();
-
-
+        forwardLeftDiagonal();  //Affected by the error on line 87
     }
-
-
 
     @Override
     public void run() {

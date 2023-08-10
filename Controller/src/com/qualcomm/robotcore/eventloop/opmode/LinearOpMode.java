@@ -229,7 +229,7 @@ public abstract class LinearOpMode extends OpMode {
             } catch (Exception e) {
                 exception = e;
             } finally {
-                // Do the necessary bookkeeping
+                // Do the necessary bookkeeping  //??
                 isFinished = true;
             }
 
