@@ -15,29 +15,25 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Autonomous (name = "Practice PID")
 public class PracticePID extends LinearOpMode{
 
+    private double kP = 0;  //Difference between setPoint and processVariable
+    private double kI = 0;  //Error over time
+    private double kD = 0;  //Proportional to the rate of change of the processVariable
+    private double setPoint = 1500;
+    private double processVariable = 0;
+    private double time = 0;    //Set it equal to getRunTime() later while (opModeIsActive)
+
+
+
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        DcMotor bl = hardwareMap.dcMotor.get("back_left_motor");
-        DcMotor br = hardwareMap.dcMotor.get("back_right_motor");
-        DcMotor fl = hardwareMap.dcMotor.get("front_left_motor");
-        DcMotor fr = hardwareMap.dcMotor.get("front_right_motor");
 
-        bl.setDirection(DcMotor.Direction.REVERSE);
-        fl.setDirection(DcMotor.Direction.REVERSE);
+        waitForStart();
 
-        BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
+        while(opModeIsActive()){
 
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        parameters.calibrationData = null;
-        parameters.calibrationDataFile = "";
-        parameters.loggingEnabled = true;
-        parameters.loggingTag = "loggingTag";
-
-        
+        }
 
     }
 }

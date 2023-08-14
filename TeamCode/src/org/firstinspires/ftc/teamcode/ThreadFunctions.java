@@ -122,7 +122,5 @@ public class ThreadFunctions extends LinearOpMode implements Runnable {
         fr.setPower(0);
 
 
-
-
     }
 }
