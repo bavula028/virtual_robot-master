@@ -99,7 +99,7 @@ public class ArmBotDemo extends LinearOpMode {
             telemetry.addData("arm position:", arm.getCurrentPosition());
             telemetry.update();
 
-            if (gamepad1.a){
+            if (gamepad1.left_bumper){
                 while(arm.getCurrentPosition() < 2000){
                     arm.setPower(1);
                 }
