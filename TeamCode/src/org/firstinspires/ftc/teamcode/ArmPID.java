@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp (name = "PID")
-public class PID extends LinearOpMode{
+@TeleOp (name = "Arm PID")
+public class ArmPID extends LinearOpMode{
 
     /* This is a PID
         DO NOT MAKE ANY MORE CHANGES
@@ -19,13 +19,15 @@ public class PID extends LinearOpMode{
     private double proportional = 0;
     private double integral = 0;
     private double derivative = 0;
-    private double setPoint = 1500;
+    private double setPoint = 2000;
     private double processVariable = 0;
     private double time = 0;    //Set it equal to getRunTime() later while (opModeIsActive)
     private double error = 0;
     private double previousError = 0;
     private double currentPosition = 0;
     private double output = 0;
+
+
 
     @Override
     public void runOpMode() throws InterruptedException {
