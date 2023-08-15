@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class WheelsPID extends PID{
+public class RotationPID extends PID{
     //This class is applicable for Arm Bot and Mecanum Bot.
 
     double kP = 0;
@@ -17,8 +15,9 @@ public class WheelsPID extends PID{
     double processVariable = 0;
     double time = 0;
     double error = 0;
+    double currentAngle = 0;
     double previousError = 0;
-    double currentPosition = 0;
+
     double output = 0;
 
     @Override
@@ -28,6 +27,19 @@ public class WheelsPID extends PID{
         DcMotor fl = hardwareMap.dcMotor.get("front_left_motor");
         DcMotor fr = hardwareMap.dcMotor.get("front_right_motor");
 
+        waitForStart();
+
+        while (opModeIsActive()) {
+
+            time = getRuntime();
+
+            error = setPoint -  currentAngle;
+            //Error
+
+            proportional = error;
+            integral = integral + error * time;
+
+        }
 
 
 
