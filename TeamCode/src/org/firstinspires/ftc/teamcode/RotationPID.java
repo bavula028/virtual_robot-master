@@ -45,15 +45,33 @@ public class RotationPID extends PID{
         parameters.loggingEnabled = true;
         parameters.loggingTag = " ";
 
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
         while (opModeIsActive()) {
 
             time = getRuntime();
+            
             currentAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI;
+            //Why is it showing an error?
+            //When running, it terminates because of this line.
+            //Returns an exception
+
+
             error = setPoint -  currentAngle;
+
+
+            System.out.println(currentAngle);
+
 
             proportional = error;
             integral = integral + error * time;
