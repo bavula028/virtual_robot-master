@@ -1,11 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package com.qualcomm.robotcore.eventloop.opmode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+
 
 public abstract class PID extends LinearOpMode{
-
-
     @Override
     public abstract void runOpMode() throws InterruptedException;
 }
