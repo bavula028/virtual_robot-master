@@ -60,8 +60,10 @@ public class RotationPID extends PID{
         while (opModeIsActive()) {
 
             time = getRuntime();
-            
-            currentAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle * 180 / Math.PI;
+
+            double getAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle;
+
+            currentAngle = getAngle * 180 / Math.PI;
             //Why is it showing an error?
             //When running, it terminates because of this line.
             //Returns an exception
