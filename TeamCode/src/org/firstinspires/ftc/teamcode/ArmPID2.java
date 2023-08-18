@@ -40,7 +40,17 @@ public class ArmPID2 extends PID{
             integral = integral * error + time;
             derivative = (error - previousError) / time;
 
-            
+            output = kP * proportional + kI * integral + kD * derivative;
+
+            telemetry.addData("time:", time);
+            telemetry.addData("current position:", currentPosition);
+            telemetry.addData("error:", error);
+            telemetry.addData("proportional:", proportional);
+            telemetry.addData("integral:", integral);
+            telemetry.addData("derivative:", derivative);
+            telemetry.addData("output:", output);
+
+
         }
 
     }
