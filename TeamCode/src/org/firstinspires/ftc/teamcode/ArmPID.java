@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp (name = "Arm PID")
-public class ArmPID extends PID{
+public class ArmPID extends PIDclass{
     //This class is only applicable for Arm Bot
 
     double kP = 1;  //Proportional gain

@@ -4,13 +4,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Arm PID 2")
-public class ArmPID2 extends PID{
+public class ArmPID2 extends PIDclass{
 
     //Try to make this an autonomous.
     //Can this class can be made into an object??
 
-    double kP = 0;
-    double kI = 0;
+    double kP = 0.5;
+    double kI = 1;
     double kD = 1;
     double proportional = 0;
     double integral = 0;
@@ -45,14 +45,7 @@ public class ArmPID2 extends PID{
             currentPosition = arm.getCurrentPosition();
             error = setPoint - currentPosition;
 
-            proportional = error;
-            integral = integral * error + time;
-            derivative = (error - previousError) / time;
-
-            output = kP * proportional + kI * integral + kD * derivative;
-
             while (currentPosition < output){
-                arm.setPower(1);
 
                 time = getRuntime();
                 currentPosition = arm.getCurrentPosition();
@@ -73,9 +66,18 @@ public class ArmPID2 extends PID{
                 telemetry.addData("output:", output);
                 telemetry.update();
 
-            }
+                arm.setPower(1);
 
-            telemetry.addData("arm current position:", arm.getCurrentPosition());
+            }
+            arm.setPower(0);
+
+            telemetry.addData("time:", getRuntime());
+            telemetry.addData("current position:", arm.getCurrentPosition());
+            telemetry.addData("error:", error);
+            telemetry.addData("proportional:", proportional);
+            telemetry.addData("integral:", integral);
+            telemetry.addData("derivative:", derivative);
+            telemetry.addData("output:", output);
             telemetry.update();
 
 
